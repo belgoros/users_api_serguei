@@ -2,7 +2,9 @@ defmodule UsersApiSergueiWeb.ErrorJSONTest do
   use UsersApiSergueiWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert UsersApiSergueiWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert UsersApiSergueiWeb.ErrorJSON.render("404.json", %{}) == %{
+             errors: %{detail: "Not Found"}
+           }
   end
 
   test "renders 500" do
