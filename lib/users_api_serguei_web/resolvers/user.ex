@@ -1,4 +1,4 @@
-defmodule UsersApiSergueiWeb.Resolvers.Content do
+defmodule UsersApiSergueiWeb.Resolvers.User do
   alias UsersApiSerguei.Repo
 
   def list_users(_parent, args, _resolution) do

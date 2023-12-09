@@ -9,13 +9,13 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueries do
       arg(:likes_emails, :boolean)
       arg(:likes_phone_calls, :boolean)
       arg(:likes_faxes, :boolean)
-      resolve(&Resolvers.Content.list_users/3)
+      resolve(&Resolvers.User.list_users/3)
     end
 
     @desc "Get a user by id"
     field :user, :user do
       arg(:id, non_null(:id))
-      resolve(&Resolvers.Content.find_user/3)
+      resolve(&Resolvers.User.find_user/3)
     end
   end
 end
