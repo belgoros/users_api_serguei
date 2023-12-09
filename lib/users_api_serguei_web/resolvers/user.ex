@@ -14,4 +14,11 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
         {:ok, user}
     end
   end
+
+  def create_user(_parent, args, _resolution) do
+    case Repo.create_user(args) do
+      {:error, _} = reason -> {:error, reason}
+      {:ok, _} = user -> user
+    end
+  end
 end

@@ -1,4 +1,6 @@
 defmodule UsersApiSerguei.Repo do
+  alias UsersApiSerguei.User
+
   @users [
     %{
       id: 1,
@@ -59,5 +61,32 @@ defmodule UsersApiSerguei.Repo do
 
   def list_users(_) do
     @users
+  end
+
+  def create_user(attrs \\ %{}) do
+    case attrs do
+      %{
+        id: _id,
+        name: _name,
+        email: _email,
+        preferences: %{
+          likes_emails: _likes_emails,
+          likes_phone_calls: _likes_phone_calls,
+          likes_faxes: _likes_faxes
+        }
+      } ->
+        create_or_update_user(attrs)
+
+      _ ->
+        {:error, "Wrong attributes provided to create/update user!"}
+    end
+  end
+
+  defp create_or_update_user(attrs) do
+    {:ok, build_user(attrs)}
+  end
+
+  defp build_user(attrs) do
+    struct(User, attrs)
   end
 end

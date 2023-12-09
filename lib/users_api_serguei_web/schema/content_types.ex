@@ -13,4 +13,17 @@ defmodule UsersApiSergueiWeb.Schema.ContentTypes do
     field(:likes_phone_calls, :boolean)
     field(:likes_faxes, :boolean)
   end
+
+  input_object :user_input do
+    field(:id, non_null(:id))
+    field(:name, non_null(:string))
+    field(:email, non_null(:string))
+    field(:preferences, list_of(:preference_input))
+  end
+
+  input_object :preference_input do
+    field(:likes_emails, :boolean)
+    field(:likes_phone_calls, :boolean)
+    field(:likes_faxes, :boolean)
+  end
 end

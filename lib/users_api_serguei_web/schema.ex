@@ -7,4 +7,8 @@ defmodule UsersApiSergueiWeb.Schema do
   query do
     import_fields(:user_queries)
   end
+
+  mutation do
+    import_fields(:user_queries)
+  end
 end
