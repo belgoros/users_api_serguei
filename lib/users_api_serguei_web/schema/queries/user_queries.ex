@@ -33,5 +33,13 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueries do
       arg(:preferences, :preference_input)
       resolve(&Resolvers.User.update_user/3)
     end
+
+    field :update_user_preferences, :preference do
+      arg(:user_id, :id)
+      arg(:likes_emails, non_null(:boolean))
+      arg(:likes_phone_calls, :boolean)
+      arg(:likes_faxes, :boolean)
+      resolve(&Resolvers.User.update_user_preferences/3)
+    end
   end
 end

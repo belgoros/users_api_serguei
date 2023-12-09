@@ -28,4 +28,11 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
       {:ok, _} = user -> user
     end
   end
+
+  def update_user_preferences(_parent, args, _resolution) do
+    case Repo.update_user(args) do
+      {:error, _} = reason -> {:error, reason}
+      {:ok, _} = preferences -> preferences
+    end
+  end
 end

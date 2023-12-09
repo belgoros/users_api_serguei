@@ -1,4 +1,5 @@
 defmodule UsersApiSerguei.Repo do
+  alias UsersApiSerguei.Preference
   alias UsersApiSerguei.User
 
   @users [
@@ -83,7 +84,18 @@ defmodule UsersApiSerguei.Repo do
   end
 
   def update_user(attrs \\ %{}) do
-    create_or_update_user(attrs)
+    case attrs do
+      %{
+        user_id: _id,
+        likes_emails: _likes_emails,
+        likes_phone_calls: _likes_phone_calls,
+        likes_faxes: _likes_faxes
+      } ->
+        update_user_preferences(attrs)
+
+      _ ->
+        create_or_update_user(attrs)
+    end
   end
 
   defp create_or_update_user(attrs) do
@@ -92,5 +104,13 @@ defmodule UsersApiSerguei.Repo do
 
   defp build_user(attrs) do
     struct(User, attrs)
+  end
+
+  defp update_user_preferences(attrs) do
+    user = find_user(attrs.user_id)
+
+    new_preferences = Map.delete(attrs, :user_id)
+    updated_preferences = Map.merge(user.preferences, new_preferences)
+    {:ok, struct(Preference, updated_preferences)}
   end
 end
