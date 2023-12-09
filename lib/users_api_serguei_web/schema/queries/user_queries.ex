@@ -25,5 +25,13 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueries do
       arg(:preferences, :preference_input)
       resolve(&Resolvers.User.create_user/3)
     end
+
+    field :update_user, :user do
+      arg(:id, :id)
+      arg(:name, :string)
+      arg(:email, :string)
+      arg(:preferences, :preference_input)
+      resolve(&Resolvers.User.update_user/3)
+    end
   end
 end

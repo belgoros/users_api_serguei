@@ -21,4 +21,11 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
       {:ok, _} = user -> user
     end
   end
+
+  def update_user(_parent, args, _resolution) do
+    case Repo.update_user(args) do
+      {:error, _} = reason -> {:error, reason}
+      {:ok, _} = user -> user
+    end
+  end
 end

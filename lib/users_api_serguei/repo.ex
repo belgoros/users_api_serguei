@@ -82,6 +82,10 @@ defmodule UsersApiSerguei.Repo do
     end
   end
 
+  def update_user(attrs \\ %{}) do
+    create_or_update_user(attrs)
+  end
+
   defp create_or_update_user(attrs) do
     {:ok, build_user(attrs)}
   end
