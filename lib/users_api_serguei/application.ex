@@ -13,7 +13,9 @@ defmodule UsersApiSerguei.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: UsersApiSerguei.PubSub},
       # Start the Endpoint (http/https)
-      UsersApiSergueiWeb.Endpoint
+      UsersApiSergueiWeb.Endpoint,
+      # Absinthe Subscription
+      {Absinthe.Subscription, UsersApiSergueiWeb.Endpoint}
       # Start a worker by calling: UsersApiSerguei.Worker.start_link(arg)
       # {UsersApiSerguei.Worker, arg}
     ]

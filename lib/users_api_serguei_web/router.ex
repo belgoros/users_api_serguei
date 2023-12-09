@@ -8,7 +8,9 @@ defmodule UsersApiSergueiWeb.Router do
   scope "/api" do
     pipe_through :api
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: UsersApiSergueiWeb.Schema
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: UsersApiSergueiWeb.Schema,
+      socket: UsersApiSergueiWeb.UserSocket
 
     forward "/", Absinthe.Plug, schema: UsersApiSergueiWeb.Schema
   end
