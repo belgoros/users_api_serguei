@@ -17,21 +17,26 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
 
   def create_user(_parent, args, _resolution) do
     case Repo.create_user(args) do
-      {:error, _} = reason -> {:error, reason}
-      {:ok, _} = user -> user
+      {:error, _} = reason ->
+        {:error, reason}
+
+      {:ok, user} = user_response ->
+        Absinthe.Subscription.publish(UsersApiSergueiWeb.Endpoint, user,
+          created_user: "users-topic"
+        )
+
+        user_response
     end
   end
 
   def update_user(_parent, args, _resolution) do
     case Repo.update_user(args) do
-      {:error, _} = reason -> {:error, reason}
-      {:ok, _} = user -> user
+      {:ok, _user} = user_response -> user_response
     end
   end
 
   def update_user_preferences(_parent, args, _resolution) do
     case Repo.update_user(args) do
-      {:error, _} = reason -> {:error, reason}
       {:ok, _} = preferences -> preferences
     end
   end

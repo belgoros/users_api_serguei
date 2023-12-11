@@ -11,4 +11,8 @@ defmodule UsersApiSergueiWeb.Schema do
   mutation do
     import_fields(:user_queries)
   end
+
+  subscription do
+    import_fields(:user_queries)
+  end
 end
