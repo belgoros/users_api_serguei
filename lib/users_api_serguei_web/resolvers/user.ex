@@ -37,7 +37,12 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
 
   def update_user_preferences(_parent, args, _resolution) do
     case Repo.update_user(args) do
-      {:ok, _} = preferences -> preferences
+      {:ok, preference} = preference_response ->
+        Absinthe.Subscription.publish(UsersApiSergueiWeb.Endpoint, preference,
+          updated_user_preferences: "users-topic"
+        )
+
+        preference_response
     end
   end
 end

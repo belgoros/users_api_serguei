@@ -56,5 +56,18 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueries do
         {:ok, topic: "users-topic"}
       end)
     end
+
+    @desc "Subscription for the user preferences update"
+    field :updated_user_preferences, :preference do
+      arg(:user_id, :id)
+      arg(:likes_emails, :boolean)
+      arg(:likes_phone_calls, :boolean)
+      arg(:likes_faxes, :boolean)
+      resolve(&Resolvers.User.update_user_preferences/3)
+
+      config(fn _args, _info ->
+        {:ok, topic: "users-topic"}
+      end)
+    end
   end
 end
