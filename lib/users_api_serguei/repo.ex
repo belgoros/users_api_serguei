@@ -50,14 +50,8 @@ defmodule UsersApiSerguei.Repo do
     Enum.filter(@users, &(&1.id == user_id)) |> hd()
   end
 
-  def list_users(
-        %{
-          likes_emails: _likes_emails,
-          likes_phone_calls: _likes_phone_calls,
-          likes_faxes: _likes_faxes
-        } = preferences
-      ) do
-    Enum.filter(@users, fn user -> Map.equal?(user.preferences, preferences) end)
+  def list_users(%{} = preferences) do
+    filter_by_preferences(preferences)
   end
 
   def list_users(_) do
@@ -112,5 +106,17 @@ defmodule UsersApiSerguei.Repo do
     new_preferences = Map.delete(attrs, :user_id)
     updated_preferences = Map.merge(user.preferences, new_preferences)
     {:ok, struct(Preference, updated_preferences)}
+  end
+
+  def filter_by_preferences(preferences) do
+    Enum.filter(@users, fn user ->
+      check_preferences(user[:preferences], preferences)
+    end)
+  end
+
+  defp check_preferences(user_preferences, filter_preferences) do
+    Enum.all?(filter_preferences, fn {preference, value} ->
+      Map.get(user_preferences, preference) == value
+    end)
   end
 end
