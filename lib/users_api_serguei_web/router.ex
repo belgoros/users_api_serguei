@@ -10,8 +10,9 @@ defmodule UsersApiSergueiWeb.Router do
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: UsersApiSergueiWeb.Schema,
-      socket: UsersApiSergueiWeb.UserSocket,
-      interface: :playground
+      socket: UsersApiSergueiWeb.UserSocket
+
+    # interface: :playground
 
     forward "/", Absinthe.Plug, schema: UsersApiSergueiWeb.Schema
   end
