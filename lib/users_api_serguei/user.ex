@@ -1,3 +1,4 @@
 defmodule UsersApiSerguei.User do
-  defstruct [:id, :name, :email, :preferences]
+  alias UsersApiSerguei.Preference
+  defstruct [:id, :name, :email, preferences: %Preference{}]
 end
