@@ -7,6 +7,9 @@
 # General application configuration
 import Config
 
+config :users_api_serguei,
+  ecto_repos: [UsersApiSerguei.Repo]
+
 # Configures the endpoint
 config :users_api_serguei, UsersApiSergueiWeb.Endpoint,
   url: [host: "localhost"],

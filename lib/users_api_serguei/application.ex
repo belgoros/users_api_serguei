@@ -10,6 +10,8 @@ defmodule UsersApiSerguei.Application do
     children = [
       # Start the Telemetry supervisor
       UsersApiSergueiWeb.Telemetry,
+      # Start the Ecto repository
+      UsersApiSerguei.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: UsersApiSerguei.PubSub},
       # Start the Endpoint (http/https)
