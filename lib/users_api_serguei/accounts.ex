@@ -1,9 +1,15 @@
 defmodule UsersApiSerguei.Accounts do
   import Ecto.Query, warn: false
+  alias UsersApiSerguei.Accounts.Preference
   alias UsersApiSerguei.Repo
   alias UsersApiSerguei.Accounts.User
 
-  def find_user(id), do: Repo.get(User, id)
+  def find_user(id) do
+    User
+    |> Repo.get(id)
+    |> Repo.preload(:preferences)
+    |> Repo.normalize_one()
+  end
 
   def list_users(%{} = preferences) do
     filter_by_preferences(preferences)
@@ -14,65 +20,52 @@ defmodule UsersApiSerguei.Accounts do
   end
 
   def create_user(attrs \\ %{}) do
-    case attrs do
-      %{
-        id: _id,
-        name: _name,
-        email: _email,
-        preferences: %{
-          likes_emails: _likes_emails,
-          likes_phone_calls: _likes_phone_calls,
-          likes_faxes: _likes_faxes
-        }
-      } ->
-        create_or_update_user(attrs)
+    changeset = Map.put(attrs, :preferences, serialize_preferences(attrs.preferences))
 
-      _ ->
-        {:error, "Wrong attributes provided to create/update user!"}
-    end
+    %User{}
+    |> User.changeset(changeset)
+    |> Repo.insert()
   end
 
   def update_user(attrs \\ %{}) do
-    case attrs do
-      %{
-        user_id: _id,
-        likes_emails: _likes_emails,
-        likes_phone_calls: _likes_phone_calls,
-        likes_faxes: _likes_faxes
-      } ->
-        update_user_preferences(attrs)
+    with {:ok, user} <- find_user(attrs.id) do
+      changeset = Map.put(attrs, :preferences, serialize_preferences(attrs.preferences))
 
-      _ ->
-        create_or_update_user(attrs)
+      user
+      |> User.changeset(changeset)
+      |> Repo.update()
     end
   end
 
-  defp create_or_update_user(attrs) do
-    {:ok, build_user(attrs)}
-  end
-
-  defp build_user(attrs) do
-    struct(User, attrs)
-  end
-
-  defp update_user_preferences(attrs) do
-    user = find_user(attrs.user_id)
-
-    new_preferences = Map.delete(attrs, :user_id)
-    updated_preferences = Map.merge(user.preferences, new_preferences)
-    {:ok, struct(Preference, updated_preferences)}
+  def update_user_preferences(attrs \\ %{}) do
+    with {:ok, preference} <- find_preference_by_user_id(attrs.user_id) do
+      preference
+      |> Preference.changeset(attrs)
+      |> Repo.update()
+    end
   end
 
   def filter_by_preferences(preferences) do
     Repo.all(User)
+    |> Repo.preload(:preferences)
     |> Enum.filter(fn user ->
-      check_preferences(user[:preferences], preferences)
+      check_preferences(hd(user.preferences), preferences)
     end)
+  end
+
+  defp find_preference_by_user_id(user_id) do
+    Preference
+    |> Repo.get_by(user_id: user_id)
+    |> Repo.normalize_one()
   end
 
   defp check_preferences(user_preferences, filter_preferences) do
     Enum.all?(filter_preferences, fn {preference, value} ->
       Map.get(user_preferences, preference) == value
     end)
+  end
+
+  defp serialize_preferences(preferences \\ %{}) do
+    [preferences]
   end
 end

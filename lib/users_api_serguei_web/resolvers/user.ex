@@ -6,13 +6,7 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
   end
 
   def find_user(_parent, %{id: id}, _resolution) do
-    case Accounts.find_user(id) do
-      nil ->
-        {:error, "User ID #{id} not found"}
-
-      user ->
-        {:ok, user}
-    end
+    Accounts.find_user(id)
   end
 
   def create_user(_parent, args, _resolution) do
@@ -36,7 +30,7 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
   end
 
   def update_user_preferences(_parent, args, _resolution) do
-    case Accounts.update_user(args) do
+    case Accounts.update_user_preferences(args) do
       {:ok, preference} = preference_response ->
         Absinthe.Subscription.publish(UsersApiSergueiWeb.Endpoint, preference,
           updated_user_preferences: "users-topic"
