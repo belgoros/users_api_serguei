@@ -4,23 +4,28 @@ defmodule UsersApiSerguei.Accounts do
   alias UsersApiSerguei.Repo
   alias UsersApiSerguei.Accounts.User
 
-  def find_user(id) do
-    User
-    |> Repo.get(id)
-    |> Repo.preload(:preferences)
-    |> Repo.normalize_one()
+  alias EctoShorts.Actions
+
+  def find_user(params) do
+    Actions.find(
+      User,
+      with_preferences_preloaded(params)
+    )
   end
 
-  def list_users(%{} = preferences) do
-    filter_by_preferences(preferences)
+  def list_users(params \\ %{}) do
+    Actions.all(User, %{
+      preload: :preferences,
+      preferences: params
+    })
   end
 
-  def list_users(_) do
-    Repo.all(User)
+  defp with_preferences_preloaded(params) do
+    Map.put(params, :preload, [:preferences])
   end
 
   def create_user(attrs \\ %{}) do
-    changeset = Map.put(attrs, :preferences, serialize_preferences(attrs.preferences))
+    changeset = Map.put(attrs, :preferences, [attrs.preferences])
 
     %User{}
     |> User.changeset(changeset)
@@ -29,7 +34,7 @@ defmodule UsersApiSerguei.Accounts do
 
   def update_user(attrs \\ %{}) do
     with {:ok, user} <- find_user(attrs.id) do
-      changeset = Map.put(attrs, :preferences, serialize_preferences(attrs.preferences))
+      changeset = Map.put(attrs, :preferences, [attrs.preferences])
 
       user
       |> User.changeset(changeset)
@@ -54,18 +59,15 @@ defmodule UsersApiSerguei.Accounts do
   end
 
   defp find_preference_by_user_id(user_id) do
-    Preference
-    |> Repo.get_by(user_id: user_id)
-    |> Repo.normalize_one()
+    case Repo.get_by(Preference, user_id: user_id) do
+      nil -> {:error, "No Preference found for the user_id: #{user_id}"}
+      preference -> {:ok, preference}
+    end
   end
 
   defp check_preferences(user_preferences, filter_preferences) do
     Enum.all?(filter_preferences, fn {preference, value} ->
       Map.get(user_preferences, preference) == value
     end)
-  end
-
-  defp serialize_preferences(preferences \\ %{}) do
-    [preferences]
   end
 end
