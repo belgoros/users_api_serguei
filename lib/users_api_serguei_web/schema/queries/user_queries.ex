@@ -20,7 +20,6 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueries do
 
     @desc "Create a user"
     field :create_user, type: :user do
-      arg(:id, :id)
       arg(:name, :string)
       arg(:email, :string)
       arg(:preferences, :preference_input)
