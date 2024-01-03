@@ -10,6 +10,10 @@ import Config
 config :users_api_serguei,
   ecto_repos: [UsersApiSerguei.Repo]
 
+config :ecto_shorts,
+  repo: UsersApiSerguei.Repo,
+  error_module: EctoShorts.Actions.Error
+
 # Configures the endpoint
 config :users_api_serguei, UsersApiSergueiWeb.Endpoint,
   url: [host: "localhost"],
