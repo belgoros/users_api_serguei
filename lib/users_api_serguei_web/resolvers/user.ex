@@ -6,7 +6,7 @@ defmodule UsersApiSergueiWeb.Resolvers.User do
   end
 
   def find_user(_parent, %{id: id}, _resolution) do
-    Accounts.find_user(id)
+    Accounts.find_user(%{id: id})
   end
 
   def create_user(_parent, args, _resolution) do
