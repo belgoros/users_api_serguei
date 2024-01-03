@@ -1,7 +1,6 @@
 defmodule UsersApiSerguei.Accounts.Preference do
   use Ecto.Schema
   import Ecto.Changeset
-  # defstruct [:likes_emails, :likes_phone_calls, :likes_faxes]
 
   schema "preferences" do
     field(:likes_emails, :boolean)
