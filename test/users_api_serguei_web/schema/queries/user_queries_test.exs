@@ -1,5 +1,6 @@
 defmodule UsersApiSergueiWeb.Schema.Queries.UserQueriesTest do
   use UsersApiSergueiWeb.ConnCase
+  use UsersApiSergueiWeb.RepoCase
 
   @users_query_with_three_preferences """
   query {
