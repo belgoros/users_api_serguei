@@ -16,5 +16,6 @@ defmodule UsersApiSerguei.Accounts.User do
     user
     |> cast(attrs, @available_attributes)
     |> validate_required(@required_attributes)
+    |> cast_assoc(:preferences)
   end
 end
