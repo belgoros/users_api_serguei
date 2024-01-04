@@ -1,8 +1,7 @@
 defmodule UsersApiSerguei.Accounts do
   import Ecto.Query, warn: false
-  alias UsersApiSerguei.Accounts.Preference
   alias UsersApiSerguei.Repo
-  alias UsersApiSerguei.Accounts.User
+  alias UsersApiSerguei.Accounts.{User, Preference}
 
   alias EctoShorts.Actions
 
@@ -50,24 +49,10 @@ defmodule UsersApiSerguei.Accounts do
     end
   end
 
-  def filter_by_preferences(preferences) do
-    Repo.all(User)
-    |> Repo.preload(:preferences)
-    |> Enum.filter(fn user ->
-      check_preferences(hd(user.preferences), preferences)
-    end)
-  end
-
   defp find_preference_by_user_id(user_id) do
     case Repo.get_by(Preference, user_id: user_id) do
       nil -> {:error, "No Preference found for the user_id: #{user_id}"}
       preference -> {:ok, preference}
     end
-  end
-
-  defp check_preferences(user_preferences, filter_preferences) do
-    Enum.all?(filter_preferences, fn {preference, value} ->
-      Map.get(user_preferences, preference) == value
-    end)
   end
 end
