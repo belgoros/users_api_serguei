@@ -44,7 +44,8 @@ defmodule UsersApiSerguei.MixProject do
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:ecto_shorts, "~> 2.3"},
-      {:ex_machina, "~> 2.7", only: :test}
+      {:ex_machina, "~> 2.7", only: :test},
+      {:dataloader, "~> 2.0"}
     ]
   end
 
