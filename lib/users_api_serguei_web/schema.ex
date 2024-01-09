@@ -1,5 +1,6 @@
 defmodule UsersApiSergueiWeb.Schema do
   use Absinthe.Schema
+  alias UsersApiSergueiWeb.Dataloader
 
   import_types(UsersApiSergueiWeb.Graphql.Queries.UserQueries)
 
@@ -13,6 +14,10 @@ defmodule UsersApiSergueiWeb.Schema do
 
   import_types(UsersApiSergueiWeb.Graphql.Subscriptions.CreateUserSubscription)
   import_types(UsersApiSergueiWeb.Graphql.Subscriptions.UpdateUserPreferencesSubscription)
+
+  def context(ctx), do: Map.put(ctx, :loader, Dataloader.dataloader())
+
+  def plugins, do: [Absinthe.Middleware.Dataloader | Absinthe.Plugin.defaults()]
 
   query do
     import_fields(:user_queries)
