@@ -28,6 +28,7 @@ defmodule UsersApiSergueiWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import UsersApiSergueiWeb.ConnCase
+      import UsersApiSerguei.Factory
     end
   end
 

@@ -2,8 +2,6 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueriesTest do
   use UsersApiSergueiWeb.ConnCase
   use UsersApiSergueiWeb.RepoCase
 
-  import UsersApiSerguei.Factory
-
   @users_query_with_three_preferences """
   query {
     users(likesEmails: false, likesPhoneCalls: false, likesFaxes: false) {
@@ -74,7 +72,7 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueriesTest do
       preference = insert(:preference, user: user)
       conn = post(conn, "/api", query: @users_query_with_three_preferences)
 
-      assert json_response(conn, 200) == %{
+      assert json_response(conn, 200) === %{
                "data" => %{
                  "users" => [
                    %{
@@ -98,7 +96,7 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueriesTest do
       preference = insert(:preference, likes_emails: true, likes_phone_calls: true)
       conn = post(conn, "/api", query: @users_query_with_two_preferences)
 
-      assert json_response(conn, 200) == %{
+      assert json_response(conn, 200) === %{
                "data" => %{
                  "users" => [
                    %{
@@ -120,7 +118,7 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueriesTest do
 
       conn = post(conn, "/api", query: @users_query_with_one_preference)
 
-      assert json_response(conn, 200) == %{
+      assert json_response(conn, 200) === %{
                "data" => %{
                  "users" => [
                    %{
@@ -155,7 +153,7 @@ defmodule UsersApiSergueiWeb.Schema.Queries.UserQueriesTest do
 
       conn = post(conn, "/api", query: @users_query_with_no_preference)
 
-      assert json_response(conn, 200) == %{
+      assert json_response(conn, 200) === %{
                "data" => %{
                  "users" => [
                    %{
