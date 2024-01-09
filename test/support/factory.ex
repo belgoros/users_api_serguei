@@ -4,14 +4,14 @@ defmodule UsersApiSerguei.Factory do
 
   alias UsersApiSerguei.Accounts.{User, Preference}
 
-  def user_factory() do
+  def user_factory do
     %User{
       email: sequence(:email, &"user-#{&1}@example.com"),
       name: sequence(:name, &"user-#{&1}")
     }
   end
 
-  def preference_factory() do
+  def preference_factory do
     %Preference{
       likes_emails: false,
       likes_phone_calls: false,
