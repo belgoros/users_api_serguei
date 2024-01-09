@@ -13,7 +13,6 @@ defmodule UsersApiSerguei.Accounts.Preference do
 
   @doc false
   def changeset(preference, attrs) do
-    preference
-    |> cast(attrs, @available_attributes)
+    cast(preference, attrs, @available_attributes)
   end
 end
