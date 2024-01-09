@@ -8,19 +8,14 @@ defmodule UsersApiSerguei.Accounts do
   def find_user(params) do
     Actions.find(
       User,
-      with_preferences_preloaded(params)
+      params
     )
   end
 
   def list_users(params \\ %{}) do
     Actions.all(User, %{
-      preload: :preferences,
       preferences: params
     })
-  end
-
-  defp with_preferences_preloaded(params) do
-    Map.put(params, :preload, [:preferences])
   end
 
   def create_user(attrs \\ %{}) do
@@ -32,11 +27,11 @@ defmodule UsersApiSerguei.Accounts do
   end
 
   def update_user(attrs \\ %{}) do
-    with {:ok, user} <- find_user(attrs.id) do
-      changeset = Map.put(attrs, :preferences, [attrs.preferences])
+    %{id: id} = attrs
 
+    with {:ok, user} <- find_user(%{id: id}) do
       user
-      |> User.changeset(changeset)
+      |> User.changeset(attrs)
       |> Repo.update()
     end
   end
@@ -55,4 +50,11 @@ defmodule UsersApiSerguei.Accounts do
       preference -> {:ok, preference}
     end
   end
+
+  # dataloader support
+  def data, do: Dataloader.Ecto.new(Repo, query: &query/2)
+
+  defp query(User, args), do: list_users(args)
+
+  defp query(queryable, _params), do: queryable
 end
