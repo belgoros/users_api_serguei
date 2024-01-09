@@ -17,7 +17,7 @@ defmodule UsersApiSergueiWeb.Schema do
 
   def context(ctx), do: Map.put(ctx, :loader, Dataloader.dataloader())
 
-  def plugins, do: [Absinthe.Middleware.Dataloader | Absinthe.Plugin.defaults()]
+  def plugins, do: [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
 
   query do
     import_fields(:user_queries)
