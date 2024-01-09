@@ -18,7 +18,7 @@ defmodule UsersApiSerguei.Accounts do
     })
   end
 
-  def create_user(attrs \\ %{}) do
+  def create_user(attrs) do
     changeset = Map.put(attrs, :preferences, [attrs.preferences])
 
     %User{}
@@ -26,7 +26,7 @@ defmodule UsersApiSerguei.Accounts do
     |> Repo.insert()
   end
 
-  def update_user(attrs \\ %{}) do
+  def update_user(attrs) do
     %{id: id} = attrs
 
     with {:ok, user} <- find_user(%{id: id}) do
@@ -36,7 +36,7 @@ defmodule UsersApiSerguei.Accounts do
     end
   end
 
-  def update_user_preferences(attrs \\ %{}) do
+  def update_user_preferences(attrs) do
     with {:ok, preference} <- find_preference_by_user_id(attrs.user_id) do
       preference
       |> Preference.changeset(attrs)
