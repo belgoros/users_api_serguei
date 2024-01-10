@@ -45,7 +45,8 @@ defmodule UsersApiSerguei.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:ecto_shorts, "~> 2.3"},
       {:ex_machina, "~> 2.7", only: :test},
-      {:dataloader, "~> 2.0"}
+      {:dataloader, "~> 2.0"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 
