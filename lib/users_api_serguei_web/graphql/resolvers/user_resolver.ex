@@ -1,4 +1,5 @@
 defmodule UsersApiSergueiWeb.Graphql.Resolvers.UserResolver do
+  @moduledoc false
   alias UsersApiSerguei.Accounts
 
   def list_users(_parent, args, _resolution) do

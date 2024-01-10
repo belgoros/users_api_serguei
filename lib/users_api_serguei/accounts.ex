@@ -1,4 +1,5 @@
 defmodule UsersApiSerguei.Accounts do
+  @moduledoc false
   import Ecto.Query, warn: false
   alias UsersApiSerguei.Repo
   alias UsersApiSerguei.Accounts.{User, Preference}

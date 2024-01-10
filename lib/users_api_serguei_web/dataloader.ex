@@ -1,7 +1,7 @@
 defmodule UsersApiSergueiWeb.Dataloader do
   @moduledoc false
-  
+
   alias UsersApiSerguei.Accounts
 
-  def dataloader, do: Dataloader.new() |> Dataloader.add_source(Accounts, Accounts.data())
+  def dataloader, do:  Dataloader.add_source(Dataloader.new(), Accounts, Accounts.data())
 end

@@ -1,4 +1,5 @@
 defmodule UsersApiSergueiWeb.Schema do
+  @moduledoc false
   use Absinthe.Schema
   alias UsersApiSergueiWeb.Dataloader
 

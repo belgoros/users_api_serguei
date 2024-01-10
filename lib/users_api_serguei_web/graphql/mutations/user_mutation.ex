@@ -1,4 +1,5 @@
 defmodule UsersApiSergueiWeb.Graphql.Mutations.UserMutation do
+  @moduledoc false
   use Absinthe.Schema.Notation
 
   alias UsersApiSergueiWeb.Graphql.Resolvers.UserResolver

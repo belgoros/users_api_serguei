@@ -1,4 +1,5 @@
 defmodule UsersApiSergueiWeb.Graphql.Types.PreferenceType do
+  @moduledoc false
   use Absinthe.Schema.Notation
 
   import Absinthe.Resolution.Helpers, only: [dataloader: 2]
