@@ -14,9 +14,10 @@ defmodule UsersApiSerguei.Accounts do
   end
 
   def list_users(params \\ %{}) do
-    Actions.all(User, %{
-      preferences: params
-    })
+    User
+    |> User.with_preferences()
+    |> Preference.by_likes(params)
+    |> Actions.all()
   end
 
   def create_user(attrs) do
