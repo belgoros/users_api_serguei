@@ -16,22 +16,18 @@ defmodule UsersApiSerguei.Accounts.Preference do
   def by_likes(query \\ from(), params) do
     conditions =
       Enum.reduce(params, query, fn {field, value}, acc ->
-        dynamic_condition({field, value}, acc)
+        may_be_filter(acc, field, value)
       end)
 
     conditions
   end
 
-  defp dynamic_condition({:likes_emails, value} = _preference, query) do
-    where(query, [preference: p], p.likes_emails == ^value)
-  end
+  @allowed_fields [:likes_emails, :likes_phone_calls, :likes_faxes]
+  defp may_be_filter(query, _field, nil), do: query
 
-  defp dynamic_condition({:likes_phone_calls, value} = _preference, query) do
-    where(query, [preference: p], p.likes_phone_calls == ^value)
-  end
-
-  defp dynamic_condition({:likes_faxes, value} = _preference, query) do
-    where(query, [preference: p], p.likes_faxes == ^value)
+  defp may_be_filter(query, field, value) when field in @allowed_fields do
+    query
+    |> where([preference: p], field(p, ^field) == ^value)
   end
 
   @available_attributes [:likes_emails, :likes_phone_calls, :likes_faxes, :user_id]
