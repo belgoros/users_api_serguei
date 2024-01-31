@@ -4,6 +4,7 @@ defmodule UsersApiSergueiWeb.Schema do
   alias UsersApiSergueiWeb.Dataloader
 
   import_types(UsersApiSergueiWeb.Graphql.Queries.UserQueries)
+  import_types(UsersApiSergueiWeb.Graphql.Queries.HitsQuery)
 
   import_types(UsersApiSergueiWeb.Graphql.Types.UserType)
   import_types(UsersApiSergueiWeb.Graphql.Types.PreferenceType)
@@ -22,6 +23,7 @@ defmodule UsersApiSergueiWeb.Schema do
 
   query do
     import_fields(:user_queries)
+    import_fields(:hits_query)
   end
 
   mutation do
