@@ -1,12 +1,15 @@
 defmodule UsersApiSergueiWeb.Graphql.Resolvers.UserResolver do
   @moduledoc false
   alias UsersApiSerguei.Accounts
+  alias UsersApiSerguei.HitsCounter
 
   def list_users(_parent, args, _resolution) do
+    HitsCounter.increment_number(:list_users)
     {:ok, Accounts.list_users(args)}
   end
 
   def find_user(_parent, %{id: id}, _resolution) do
+    HitsCounter.increment_number(:find_user)
     Accounts.find_user(%{id: id})
   end
 
