@@ -17,8 +17,9 @@ defmodule UsersApiSerguei.Application do
       # Start the Endpoint (http/https)
       UsersApiSergueiWeb.Endpoint,
       # Absinthe Subscription
-      {Absinthe.Subscription, UsersApiSergueiWeb.Endpoint}
+      {Absinthe.Subscription, UsersApiSergueiWeb.Endpoint},
       # Start a worker by calling: UsersApiSerguei.Worker.start_link(arg)
+      {UsersApiSerguei.HitsCounter, []}
       # {UsersApiSerguei.Worker, arg}
     ]
 
