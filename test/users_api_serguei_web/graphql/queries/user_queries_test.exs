@@ -1,4 +1,4 @@
-defmodule UsersApiSergueiWeb.Schema.Queries.UserQueriesTest do
+defmodule UsersApiSergueiWeb.Graphql.Queries.UserQueriesTest do
   use UsersApiSergueiWeb.ConnCase
   use UsersApiSergueiWeb.RepoCase
 
