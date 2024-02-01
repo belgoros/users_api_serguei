@@ -24,6 +24,10 @@ defmodule UsersApiSerguei.HitsCounter do
     GenServer.cast(@name, {:increment_number, request_type})
   end
 
+  def clear do
+    GenServer.cast(@name, :clear)
+  end
+
   # GenServer implementation
 
   @impl true
@@ -51,5 +55,9 @@ defmodule UsersApiSerguei.HitsCounter do
   def handle_cast({:increment_number, request_type}, state) do
     new_state = Map.update!(state, request_type, &(&1 + 1))
     {:noreply, new_state}
+  end
+
+  def handle_cast(:clear, _state) do
+    {:noreply, %State{}}
   end
 end
