@@ -14,6 +14,8 @@ defmodule UsersApiSergueiWeb.Graphql.Resolvers.UserResolver do
   end
 
   def create_user(_parent, args, _resolution) do
+    HitsCounter.increment_number(:create_user)
+
     case Accounts.create_user(args) do
       {:error, _} = reason ->
         {:error, reason}
@@ -28,12 +30,16 @@ defmodule UsersApiSergueiWeb.Graphql.Resolvers.UserResolver do
   end
 
   def update_user(_parent, args, _resolution) do
+    HitsCounter.increment_number(:update_user)
+
     case Accounts.update_user(args) do
       {:ok, _user} = user_response -> user_response
     end
   end
 
   def update_user_preferences(_parent, args, _resolution) do
+    HitsCounter.increment_number(:update_user)
+
     case Accounts.update_user_preferences(args) do
       {:ok, preference} = preference_response ->
         Absinthe.Subscription.publish(UsersApiSergueiWeb.Endpoint, preference,
