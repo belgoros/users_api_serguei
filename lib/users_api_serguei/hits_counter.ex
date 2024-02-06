@@ -3,7 +3,7 @@ defmodule UsersApiSerguei.HitsCounter do
 
   use GenServer
 
-  @name :hits_sever
+  @default_name HitsCounter
 
   defmodule State do
     @moduledoc false
@@ -12,20 +12,21 @@ defmodule UsersApiSerguei.HitsCounter do
 
   # External API
 
-  def start_link(_args) do
-    GenServer.start_link(__MODULE__, %State{}, name: @name)
+  def start_link(opts \\ []) do
+    opts = Keyword.put_new(opts, :name, @default_name)
+    GenServer.start_link(__MODULE__, %State{}, opts)
   end
 
-  def resolver_hits(request_type) do
-    GenServer.call(@name, {:resolver_hits, request_type})
+  def resolver_hits(name \\ @default_name, request_type) do
+    GenServer.call(name, {:resolver_hits, request_type})
   end
 
-  def increment_number(request_type) do
-    GenServer.cast(@name, {:increment_number, request_type})
+  def increment_number(name \\ @default_name, request_type) do
+    GenServer.cast(name, {:increment_number, request_type})
   end
 
-  def clear do
-    GenServer.cast(@name, :clear)
+  def clear(name \\ @default_name) do
+    GenServer.cast(name, :clear)
   end
 
   # GenServer implementation
