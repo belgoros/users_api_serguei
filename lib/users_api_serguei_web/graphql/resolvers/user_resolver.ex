@@ -43,7 +43,7 @@ defmodule UsersApiSergueiWeb.Graphql.Resolvers.UserResolver do
     case Accounts.update_user_preferences(args) do
       {:ok, preference} = preference_response ->
         Absinthe.Subscription.publish(UsersApiSergueiWeb.Endpoint, preference,
-          updated_user_preferences: "users-topic"
+          update_user_preferences: "users-topic"
         )
 
         preference_response
