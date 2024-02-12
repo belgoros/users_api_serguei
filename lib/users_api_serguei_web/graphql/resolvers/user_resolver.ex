@@ -21,9 +21,9 @@ defmodule UsersApiSergueiWeb.Graphql.Resolvers.UserResolver do
         {:error, reason}
 
       {:ok, user} = user_response ->
-        Absinthe.Subscription.publish(UsersApiSergueiWeb.Endpoint, user,
-          created_user: "users-topic"
-        )
+        {:ok, user}
+
+        Absinthe.Subscription.publish(UsersApiSergueiWeb.Endpoint, user, new_user: "users-topic")
 
         user_response
     end
