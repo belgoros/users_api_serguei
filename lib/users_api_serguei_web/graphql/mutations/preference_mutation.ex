@@ -7,7 +7,7 @@ defmodule UsersApiSergueiWeb.Graphql.Mutations.PreferenceMutation do
   object :update_preference_mutation do
     @desc "Update user preferences"
     field :update_user_preferences, :preference do
-      arg(:user_id, :id)
+      arg(:user_id, non_null(:id))
       arg(:likes_emails, non_null(:boolean))
       arg(:likes_phone_calls, :boolean)
       arg(:likes_faxes, :boolean)
