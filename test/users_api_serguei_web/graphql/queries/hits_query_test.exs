@@ -2,7 +2,7 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
   use UsersApiSergueiWeb.ConnCase
   use UsersApiSergueiWeb.RepoCase
 
-  alias UsersApiSerguei.HitsCounterAgent
+  alias UsersApiSerguei.HitsCounter
 
   setup [:init_user, :clear_hits]
 
@@ -160,7 +160,7 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
   end
 
   defp clear_hits(_context) do
-    HitsCounterAgent.clear()
+    HitsCounter.clear()
   end
 
   defp find_user_query(user_id) do

@@ -19,7 +19,7 @@ defmodule UsersApiSerguei.Application do
       # Absinthe Subscription
       {Absinthe.Subscription, UsersApiSergueiWeb.Endpoint},
       # Start a worker by calling: UsersApiSerguei.Worker.start_link(arg)
-      {UsersApiSerguei.HitsCounterAgent, []}
+      {UsersApiSerguei.HitsCounter, []}
       # {UsersApiSerguei.Worker, arg}
     ]
 
