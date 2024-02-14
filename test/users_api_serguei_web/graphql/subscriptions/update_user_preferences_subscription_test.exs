@@ -1,6 +1,4 @@
 defmodule UsersApiSergueiWeb.Graphql.Subscriptions.UpdateUserPreferencesSubscriptionTest do
-  @moduledoc false
-
   use UsersApiSergueiWeb.ConnCase
   use UsersApiSergueiWeb.SubscriptionCase
 

@@ -1,6 +1,4 @@
 defmodule UsersApiSerguei.Factory do
-  @moduledoc false
-  # with Ecto
   use ExMachina.Ecto, repo: UsersApiSerguei.Repo
 
   alias UsersApiSerguei.Accounts.{User, Preference}
