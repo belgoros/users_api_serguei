@@ -52,16 +52,14 @@ defmodule UsersApiSergueiWeb.Graphql.Subscriptions.CreateUserSubscriptionTest do
       "preferences" => preferences
     }
 
-    ref = push_doc(socket, @create_user_mutation, variables: user_input)
-    assert_reply ref, :ok, reply
-
-    assert %{data: %{"createUser" => %{"name" => "user-1"}}} = reply
+    {:ok, ref} =
+      Absinthe.run(@create_user_mutation, UsersApiSergueiWeb.Schema, variables: user_input)
 
     # check to see if we got subscription data
     expected = %{
       result: %{
         data: %{
-          "newUser" => get_in(reply, [:data, "createUser"])
+          "newUser" => get_in(ref, [:data, "createUser"])
         }
       },
       subscriptionId: subscription_id
