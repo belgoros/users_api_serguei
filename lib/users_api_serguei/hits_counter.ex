@@ -3,7 +3,7 @@ defmodule UsersApiSerguei.HitsCounter do
 
   use Agent
 
-  @default_name HitsCounter
+  @default_name UsersApiSerguei.HitsCounter
 
   defmodule State do
     @moduledoc false
