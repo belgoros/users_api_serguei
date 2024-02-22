@@ -1,11 +1,11 @@
 defmodule UsersApiSergueiWeb.ChannelCase do
-  @moduledoc false
   use ExUnit.CaseTemplate
 
   using do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
+      import UsersApiSergueiWeb.ChannelCase
 
       # The default endpoint for testing
       @endpoint UsersApiSergueiWeb.Endpoint

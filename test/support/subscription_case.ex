@@ -7,6 +7,9 @@ defmodule UsersApiSergueiWeb.SubscriptionCase do
 
   using do
     quote do
+      import Plug.Conn
+      import Phoenix.ConnTest
+
       use UsersApiSergueiWeb.ChannelCase
       use Absinthe.Phoenix.SubscriptionTest, schema: UsersApiSergueiWeb.Schema
 

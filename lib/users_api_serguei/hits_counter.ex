@@ -1,9 +1,9 @@
-defmodule UsersApiSerguei.HitsCounterAgent do
+defmodule UsersApiSerguei.HitsCounter do
   @moduledoc false
 
   use Agent
 
-  @default_name HitsCounterAgent
+  @default_name UsersApiSerguei.HitsCounter
 
   defmodule State do
     @moduledoc false

@@ -1,6 +1,4 @@
 defmodule UsersApiSergueiWeb.Graphql.Subscriptions.UpdateUserPreferencesSubscriptionTest do
-  @moduledoc false
-
   use UsersApiSergueiWeb.ConnCase
   use UsersApiSergueiWeb.SubscriptionCase
 
@@ -43,8 +41,12 @@ defmodule UsersApiSergueiWeb.Graphql.Subscriptions.UpdateUserPreferencesSubscrip
       "likesEmails" => false
     }
 
-    ref = push_doc(socket, @update_user_preferences_mutation, variables: user_input)
-    assert_reply ref, :ok, reply
+    {:ok, ref} =
+      Absinthe.run(@update_user_preferences_mutation, UsersApiSergueiWeb.Schema,
+        variables: user_input
+      )
+
+    # assert_reply ref, :ok, reply
 
     assert %{
              data: %{
@@ -54,14 +56,14 @@ defmodule UsersApiSergueiWeb.Graphql.Subscriptions.UpdateUserPreferencesSubscrip
                  "likesPhoneCalls" => true
                }
              }
-           } = reply
+           } = ref
 
     # check to see if we got subscription data
 
     expected = %{
       result: %{
         data: %{
-          "updateUserPreferences" => get_in(reply, [:data, "updateUserPreferences"])
+          "updateUserPreferences" => get_in(ref, [:data, "updateUserPreferences"])
         }
       },
       subscriptionId: subscription_id

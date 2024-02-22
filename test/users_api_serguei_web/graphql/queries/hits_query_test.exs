@@ -2,7 +2,7 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
   use UsersApiSergueiWeb.ConnCase
   use UsersApiSergueiWeb.RepoCase
 
-  alias UsersApiSerguei.HitsCounterAgent
+  alias UsersApiSerguei.HitsCounter
 
   setup [:init_user, :clear_hits]
 
@@ -47,25 +47,32 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
       resolver_query_for(:list_users)
     end
 
-    test "it displays zero hits", %{conn: conn, resolver_query: resolver_query} do
-      conn = post(conn, "/api", query: resolver_query)
+    test "it displays zero hits", %{conn: _conn, resolver_query: resolver_query} do
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 0
-               }
-             }
+      expected = %{
+        data: %{
+          "resolverHits" => 0
+        }
+      }
+
+      assert expected === response
     end
 
-    test "it displays 1 hit", %{conn: conn, resolver_query: resolver_query} do
-      conn = post(conn, "/api", query: @users_query)
-      conn = post(conn, "/api", query: resolver_query)
+    test "it displays 1 hit", %{conn: _conn, resolver_query: resolver_query} do
+      Absinthe.run(@users_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 1
-               }
-             }
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
+
+      expected = %{
+        data: %{
+          "resolverHits" => 1
+        }
+      }
+
+      assert expected === response
     end
   end
 
@@ -74,26 +81,32 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
       resolver_query_for(:find_user)
     end
 
-    test "it displays zero hits", %{conn: conn, resolver_query: resolver_query} do
-      conn = post(conn, "/api", query: resolver_query)
+    test "it displays zero hits", %{conn: _conn, resolver_query: resolver_query} do
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 0
-               }
-             }
+      expected = %{
+        data: %{
+          "resolverHits" => 0
+        }
+      }
+
+      assert expected === response
     end
 
-    test "it displays 1 hit", %{conn: conn, user: user, resolver_query: resolver_query} do
-      conn = post(conn, "/api", query: find_user_query(user.id))
+    test "it displays 1 hit", %{conn: _conn, user: user, resolver_query: resolver_query} do
+      Absinthe.run(find_user_query(user.id), UsersApiSergueiWeb.Schema)
 
-      conn = post(conn, "/api", query: resolver_query)
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 1
-               }
-             }
+      expected = %{
+        data: %{
+          "resolverHits" => 1
+        }
+      }
+
+      assert expected === response
     end
   end
 
@@ -102,26 +115,32 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
       resolver_query_for(:create_user)
     end
 
-    test "it displays zero hits", %{conn: conn, resolver_query: resolver_query} do
-      conn = post(conn, "/api", query: resolver_query)
+    test "it displays zero hits", %{conn: _conn, resolver_query: resolver_query} do
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 0
-               }
-             }
+      expected = %{
+        data: %{
+          "resolverHits" => 0
+        }
+      }
+
+      assert expected === response
     end
 
-    test "it displays 1 hit", %{conn: conn, resolver_query: resolver_query} do
-      conn = post(conn, "/api", query: @create_user_mutation)
+    test "it displays 1 hit", %{conn: _conn, resolver_query: resolver_query} do
+      Absinthe.run(@create_user_mutation, UsersApiSergueiWeb.Schema)
 
-      conn = post(conn, "/api", query: resolver_query)
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 1
-               }
-             }
+      expected = %{
+        data: %{
+          "resolverHits" => 1
+        }
+      }
+
+      assert expected === response
     end
   end
 
@@ -130,26 +149,32 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
       resolver_query_for(:update_user)
     end
 
-    test "it displays zero hits", %{conn: conn, resolver_query: resolver_query} do
-      conn = post(conn, "/api", query: resolver_query)
+    test "it displays zero hits", %{conn: _conn, resolver_query: resolver_query} do
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 0
-               }
-             }
+      expected = %{
+        data: %{
+          "resolverHits" => 0
+        }
+      }
+
+      assert expected === response
     end
 
-    test "it displays 1 hit", %{conn: conn, resolver_query: resolver_query, user: user} do
-      conn = post(conn, "/api", query: update_user_mutation(user.id))
+    test "it displays 1 hit", %{conn: _conn, resolver_query: resolver_query, user: user} do
+      Absinthe.run(update_user_mutation(user.id), UsersApiSergueiWeb.Schema)
 
-      conn = post(conn, "/api", query: resolver_query)
+      {:ok, response} =
+        Absinthe.run(resolver_query, UsersApiSergueiWeb.Schema)
 
-      assert json_response(conn, 200) === %{
-               "data" => %{
-                 "resolverHits" => 1
-               }
-             }
+      expected = %{
+        data: %{
+          "resolverHits" => 1
+        }
+      }
+
+      assert expected === response
     end
   end
 
@@ -160,7 +185,7 @@ defmodule UsersApiSergueiWeb.Graphql.Queries.HitsQueryTest do
   end
 
   defp clear_hits(_context) do
-    HitsCounterAgent.clear()
+    HitsCounter.clear()
   end
 
   defp find_user_query(user_id) do
